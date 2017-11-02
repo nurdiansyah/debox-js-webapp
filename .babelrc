@@ -1,0 +1,36 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "modules": false,
+      "debug": false,
+      "targets": {
+        "browsers": [
+          "last 2 versions",
+          "ios_saf >= 10",
+          "not IE <= 10",
+          "chrome >= 61",
+          "safari >= 10",
+          "firefox >= 52",
+          "> 1%"
+        ]
+      }
+    }]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "rewire-es5"
+      ]
+    }
+  },
+  "plugins": [
+    "transform-class-properties",
+    ["transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ]
+  ]
+}

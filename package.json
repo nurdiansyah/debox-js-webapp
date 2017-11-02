@@ -1,0 +1,57 @@
+{
+  "name": "@debox-client/webapp-core",
+  "version": "1.0.0",
+  "description": "debox framework webapp core.",
+  "publishConfig": {
+    "registry": "http://devel.deboxserver:8081/artifactory/api/npm/npm-local"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.com/debox-npm-client-webapp-core"
+  },
+  "keywords": [
+    "webapp",
+    "component",
+    "react"
+  ],
+  "author": "Nurdiansyah",
+  "main": "libs/index.js",
+  "files": [
+    "libs"
+  ],
+  "release-script": {
+    "altPkgRootFolder": "libs"
+  },
+  "jest": {
+    "preset": "@debox-devel/webapp"
+  },
+  "dependencies": {
+    "@debox-client/core": "^1.0.0",
+    "classnames": "2.2.5",
+    "react-dom": "^16.0.0-beta.5",
+    "dom-helpers": "^2.4.0"
+  },
+  "devDependencies": {
+    "@debox-devel/webapp": "^1.0.0",
+    "modernizr": "^3.5.0",
+    "react": "^16.0.0-beta.5"
+  },
+  "scripts": {
+    "eslint": "./node_modules/.bin/eslint -c .eslintrc.json ./src",
+    "prettier": "./node_modules/.bin/prettier \"src/**/*.js?x\"",
+    "flow": "./node_modules/.bin/flow",
+    "check": "npm run flow && npm run eslint -- --fix",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production npm run babel && npm run build:flow",
+    "build:flow": "./node_modules/.bin/flow-copy-source src libs && cpx \"src/**/*.flow\" libs",
+    "prepublishOnly": "npm run check && npm run build",
+    "clean": "rimraf libs",
+    "babel": "npm run clean && babel ./src --ignore '**/__tests__' --out-dir ./libs",
+    "release": "release",
+    "test": "cross-env NODE_ENV=test npm run flow && jest '.*/__tests__/.*(spec)\\.jsx?$'",
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "npm test -- --coverage",
+    "modernizr": "./node_modules/.bin/modernizr -c .modernizrrc.json -d ./src/components/utils/modernizr.js"
+  }
+}
