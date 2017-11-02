@@ -16,42 +16,38 @@
     "react"
   ],
   "author": "Nurdiansyah",
-  "main": "libs/index.js",
-  "files": [
-    "libs"
-  ],
-  "release-script": {
-    "altPkgRootFolder": "libs"
-  },
+  "main": "index.js",
   "jest": {
     "preset": "@debox-devel/webapp"
   },
   "dependencies": {
-    "@debox-client/core": "^1.0.0",
+    "@debox-client/core": "1.0.*",
     "classnames": "2.2.5",
-    "react-dom": "^16.0.0-beta.5",
-    "dom-helpers": "^2.4.0"
+    "dom-helpers": "^2.4.0",
+    "eventsource-polyfill": "^0.9.6",
+    "fastclick": "^1.0.6",
+    "react-dom": "16.0.*"
   },
   "devDependencies": {
     "@debox-devel/webapp": "^1.0.0",
-    "modernizr": "^3.5.0",
-    "react": "^16.0.0-beta.5"
+    "modernizr": "^3.5.0"
   },
   "scripts": {
-    "eslint": "./node_modules/.bin/eslint -c .eslintrc.json ./src",
-    "prettier": "./node_modules/.bin/prettier \"src/**/*.js?x\"",
-    "flow": "./node_modules/.bin/flow",
+    "eslint": "eslint -c .eslintrc.json ./src",
+    "prettier": "prettier \"src/**/*.js?x\"",
+    "flow": "flow",
     "check": "npm run flow && npm run eslint -- --fix",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production npm run babel && npm run build:flow",
-    "build:flow": "./node_modules/.bin/flow-copy-source src libs && cpx \"src/**/*.flow\" libs",
-    "prepublishOnly": "npm run check && npm run build",
+    "build:flow": "flow-copy-source src libs && cpx \"src/**/*.flow\" libs",
+    "predeploy": "npm run check && npm run build",
+    "cpPkgJson": "cpx package.json libs",
+    "deploy": "npm run cpPkgJson && cd libs && npm publish",
     "clean": "rimraf libs",
-    "babel": "npm run clean && babel ./src --ignore '**/__tests__' --out-dir ./libs",
-    "release": "release",
-    "test": "cross-env NODE_ENV=test npm run flow && jest '.*/__tests__/.*(spec)\\.jsx?$'",
+    "babel": "babel ./src --ignore '**/__tests__' --out-dir ./libs",
+    "test": "cross-env NODE_ENV=test npm run flow && jest 'src/.*/__tests__/.*(spec)\\.jsx?$'",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
-    "modernizr": "./node_modules/.bin/modernizr -c .modernizrrc.json -d ./src/components/utils/modernizr.js"
+    "modernizr": "modernizr -c .modernizrrc.json -d ./src/components/utils/modernizr.js"
   }
 }

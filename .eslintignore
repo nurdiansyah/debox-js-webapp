@@ -1,10 +1,5 @@
 node_modules
 karma.conf.js
-bin
 build
 modernizr.js
-*.test.js
-*-test.js
-*.spec.js
-*-spec.js
-*-mock.js
+

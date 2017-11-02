@@ -192,4 +192,4 @@ webpack-stats.json
 config/local*
 
 assets/dist
-libs
+package-lock.json

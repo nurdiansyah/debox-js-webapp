@@ -1,9 +1,0 @@
-// @flow
-
-declare function createConnect(
-  identifier: string,
-  styles: any,
-  options?: Object
-): Function
-
-export default createConnect

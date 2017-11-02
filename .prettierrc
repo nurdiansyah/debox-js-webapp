@@ -2,5 +2,6 @@
   "bracketSpacing": false,
   "parser": "flow",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "printWidth": 110
 }
