@@ -3,13 +3,7 @@
 
 const isDev = process.env.NODE_ENV !== 'production'
 
-type CssModuleType =
-  | {
-      [string]: string
-    }
-  | {
-      +[string]: string
-    }
+type CssModuleType = {_insertCss?: Function, [key: string]: string}
 
 export type ElementType = null | string | Object
 

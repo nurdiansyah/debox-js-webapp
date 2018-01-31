@@ -173,7 +173,7 @@ describe('bem-css-modules', () => {
         // pass
       }
 
-      SomeClass.prototype = {foo: 1}
+      SomeClass.prototype = {foo: 1, _insertCss: () => ({})}
 
       _bem.setCssModule(new SomeClass())
       _block.className()

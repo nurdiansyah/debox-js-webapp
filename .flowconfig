@@ -1,6 +1,7 @@
 ;suppress inspection "DuplicateKeyInSection" for whole file
 [ignore]
 <PROJECT_ROOT>/libs/.*
+<PROJECT_ROOT>/node_modules/immutable/dist/immutable.js.flow
 
 [include]
 
@@ -13,7 +14,5 @@ emoji=true
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
 esproposal.export_star_as=enable
-module.name_mapper='.*\.(s?css)' -> '<PROJECT_ROOT>/internals/flow/CSSModule.js.flow'
-module.name_mapper='.*\.(jpg|png)' -> '<PROJECT_ROOT>/internals/flow/WebpackAsset.js.flow'
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue

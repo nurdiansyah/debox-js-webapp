@@ -1,14 +1,11 @@
 {
-  "name": "@debox-client/webapp-core",
-  "version": "1.0.0",
+  "name": "@deboxsoft/webapp",
+  "version": "1.0.0-rc.0",
   "description": "debox framework webapp core.",
-  "publishConfig": {
-    "registry": "http://devel.deboxserver:8081/artifactory/api/npm/npm-local"
-  },
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.com/debox-npm-client-webapp-core"
+    "url": "https://bitbucket.com/deboxjs-webapp"
   },
   "keywords": [
     "webapp",
@@ -18,18 +15,18 @@
   "author": "Nurdiansyah",
   "main": "index.js",
   "jest": {
-    "preset": "@debox-devel/webapp"
+    "preset": "@deboxsoft/devel-webapp"
   },
   "dependencies": {
-    "@debox-client/core": "1.0.*",
-    "classnames": "2.2.5",
+    "@deboxsoft/core": "^1.0.0-rc.0",
     "dom-helpers": "^2.4.0",
     "eventsource-polyfill": "^0.9.6",
     "fastclick": "^1.0.6",
     "react-dom": "16.0.*"
   },
   "devDependencies": {
-    "@debox-devel/webapp": "^1.0.0",
+    "@deboxsoft/devel-webapp": "^1.0.0-rc.0",
+    "eslint-plugin-prettier": "*",
     "modernizr": "^3.5.0"
   },
   "scripts": {
@@ -42,7 +39,8 @@
     "build:flow": "flow-copy-source src libs && cpx \"src/**/*.flow\" libs",
     "predeploy": "npm run check && npm run build",
     "cpPkgJson": "cpx package.json libs",
-    "deploy": "npm run cpPkgJson && cd libs && npm publish",
+    "deploy": "npm run cpPkgJson && cd libs && yarn publish --access public",
+    "deploy:artifactory": "npm run cpPkgJson && cd libs && yarn publish --registry http://devel.deboxserver:8081/artifactory/api/npm/npm-local",
     "clean": "rimraf libs",
     "babel": "babel ./src --ignore '**/__tests__' --out-dir ./libs",
     "test": "cross-env NODE_ENV=test npm run flow && jest 'src/.*/__tests__/.*(spec)\\.jsx?$'",
