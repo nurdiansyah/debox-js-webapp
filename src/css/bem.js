@@ -120,7 +120,7 @@ class Bem {
             if (!stateValue) {
               return acc
             }
-            const cn = `is_${next}`
+            const cn = `is-${next}`
             const state = this.cssModule[cn]
             if (!state) {
               if (isDev && !this.settings.ignoreError) {

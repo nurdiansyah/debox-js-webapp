@@ -5,94 +5,94 @@ import Bem from '../bem'
 process.env.NODE_ENV = 'development'
 
 const mockCSSModule = {
-  input: 'HASH_INPUT',
-  input_disabled: 'HASH_INPUT_DISABLED',
-  input__field: 'HASH_INPUT_FIELD',
-  input__field_disabled: 'HASH_INPUT_FIELD_DISABLED',
-  input__field_type_text: 'HASH_INPUT_FIELD_TYPE_TEXT',
-  input__field_type_phone: 'HASH_INPUT_FIELD_TYPE_PHONE',
-  input__icon: 'HASH_INPUT_ICON',
-  'is-active': 'HASH_IS_ACTIVE',
-  'is-removed': 'HASH_IS_REMOVED'
+  input: 'HASH-INPUT',
+  'input--disabled': 'HASH-INPUT--DISABLED',
+  input__field: 'HASH-INPUT__FIELD',
+  'input__field--disabled': 'HASH-INPUT__FIELD--DISABLED',
+  'input__field--type_text': 'HASH-INPUT__FIELD--TYPE_TEXT',
+  'input__field--type_phone': 'HASH-INPUT__FIELD--TYPE_PHONE',
+  input__icon: 'HASH-INPUT__ICON',
+  'is-active': 'HASH_IS-ACTIVE',
+  'is-removed': 'HASH_IS-REMOVED'
 }
 
 const namesToArray = name => name.split(' ').sort()
 
 describe('bem-css-modules', () => {
-  const bem = new Bem(mockCSSModule)
+  const bem = new Bem(mockCSSModule, {suppressWarning: false})
   const block = bem.block()
 
   it('should return base element', () => {
-    expect(block.className()).toBe('HASH_INPUT')
-    expect(block.className(null)).toBe('HASH_INPUT')
-    expect(block.className('')).toBe('HASH_INPUT')
+    expect(block.className()).toBe('HASH-INPUT')
+    expect(block.className(null)).toBe('HASH-INPUT')
+    expect(block.className('')).toBe('HASH-INPUT')
   })
 
   it('should return base element with mods', () => {
     expect(namesToArray(block.className('', {disabled: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED')
     )
 
     expect(namesToArray(block.className(null, {disabled: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED')
     )
 
     expect(namesToArray(block.className({disabled: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED')
     )
   })
 
   it('should return base element with mods and states', () => {
     expect(namesToArray(block.className('', {disabled: true}, {active: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED HASH_IS_ACTIVE')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED HASH_IS-ACTIVE')
     )
 
     expect(namesToArray(block.className(null, {disabled: true}, {active: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED HASH_IS_ACTIVE')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED HASH_IS-ACTIVE')
     )
     expect(namesToArray(block.className({disabled: true}, {active: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_INPUT_DISABLED HASH_IS_ACTIVE')
+      namesToArray('HASH-INPUT HASH-INPUT--DISABLED HASH_IS-ACTIVE')
     )
   })
 
   it('should return elements', () => {
-    expect(block.className('icon')).toBe('HASH_INPUT_ICON')
-    expect(block.className('field')).toBe('HASH_INPUT_FIELD')
+    expect(block.className('icon')).toBe('HASH-INPUT__ICON')
+    expect(block.className('field')).toBe('HASH-INPUT__FIELD')
 
     expect(new Bem({input__field: 'foo'}).block().className('field')).toBe('foo')
   })
 
   it('should return elements with mods', () => {
-    expect(block.className('field', {disabled: true})).toBe('HASH_INPUT_FIELD HASH_INPUT_FIELD_DISABLED')
-    expect(block.className('field', {disabled: false})).toBe('HASH_INPUT_FIELD')
-    expect(block.className('field', {type: 'text'})).toBe('HASH_INPUT_FIELD HASH_INPUT_FIELD_TYPE_TEXT')
+    expect(block.className('field', {disabled: true})).toBe('HASH-INPUT__FIELD HASH-INPUT__FIELD--DISABLED')
+    expect(block.className('field', {disabled: false})).toBe('HASH-INPUT__FIELD')
+    expect(block.className('field', {type: 'text'})).toBe('HASH-INPUT__FIELD HASH-INPUT__FIELD--TYPE_TEXT')
     expect(namesToArray(block.className('field', {type: 'phone', disabled: true}))).toEqual(
-      namesToArray('HASH_INPUT_FIELD HASH_INPUT_FIELD_TYPE_PHONE HASH_INPUT_FIELD_DISABLED')
+      namesToArray('HASH-INPUT__FIELD HASH-INPUT__FIELD--TYPE_PHONE HASH-INPUT__FIELD--DISABLED')
     )
   })
 
   it('should return elements with states', () => {
     expect(block.className('field', null, {active: true, removed: false})).toBe(
-      'HASH_INPUT_FIELD HASH_IS_ACTIVE'
+      'HASH-INPUT__FIELD HASH_IS-ACTIVE'
     )
     expect(namesToArray(block.className('field', null, {active: true, removed: true}))).toEqual(
-      namesToArray('HASH_INPUT_FIELD HASH_IS_ACTIVE HASH_IS_REMOVED')
+      namesToArray('HASH-INPUT__FIELD HASH_IS-ACTIVE HASH_IS-REMOVED')
     )
 
     expect(namesToArray(block.className(null, null, {active: true, removed: true}))).toEqual(
-      namesToArray('HASH_INPUT HASH_IS_ACTIVE HASH_IS_REMOVED')
+      namesToArray('HASH-INPUT HASH_IS-ACTIVE HASH_IS-REMOVED')
     )
   })
 
   it('should return elements with mods and states', () => {
     expect(namesToArray(block.className('field', {disabled: true}, {active: true, removed: true}))).toEqual(
-      namesToArray('HASH_INPUT_FIELD HASH_IS_ACTIVE HASH_IS_REMOVED HASH_INPUT_FIELD_DISABLED')
+      namesToArray('HASH-INPUT__FIELD HASH_IS-ACTIVE HASH_IS-REMOVED HASH-INPUT__FIELD--DISABLED')
     )
     expect(
       namesToArray(block.className('field', {disabled: true, type: 'text'}, {active: true, removed: true}))
     ).toEqual(
       namesToArray(
-        'HASH_INPUT_FIELD HASH_IS_ACTIVE HASH_IS_REMOVED HASH_INPUT_FIELD_DISABLED HASH_INPUT_FIELD_TYPE_TEXT'
+        'HASH-INPUT__FIELD HASH_IS-ACTIVE HASH_IS-REMOVED HASH-INPUT__FIELD--DISABLED HASH-INPUT__FIELD--TYPE_TEXT'
       )
     )
   })
@@ -137,10 +137,10 @@ describe('bem-css-modules', () => {
     it('should throw error with unexisted mods', () => {
       _bem.setCssModule({input: 'INPUT', input__icon: 'INPUT__ICON'})
       expect(() => _bem.block().className('icon', {foo: true})).toThrowError(
-        'Tidak ada className input__icon_foo di cssModule'
+        'Tidak ada className input__icon--foo di cssModule'
       )
       expect(() => _bem.block().className('icon', {foo: 'bar'})).toThrowError(
-        'Tidak ada className input__icon_foo_bar di cssModule'
+        'Tidak ada className input__icon--foo_bar di cssModule'
       )
     })
 
@@ -164,7 +164,7 @@ describe('bem-css-modules', () => {
     })
 
     it('should throw error with css modules without keys', () => {
-      const _bem = new Bem({})
+      const _bem = new Bem({}, {suppressWarning: false})
       const _block = _bem.block()
       _block.className()
       expect(spy).toHaveBeenCalledWith('cssModule has no keys')
@@ -187,10 +187,10 @@ describe('bem-css-modules', () => {
 
     it('should throw error with unexisted mods', () => {
       block.className('icon', {foo: true})
-      expect(spy).toHaveBeenCalledWith('Tidak ada className input__icon_foo di cssModule')
+      expect(spy).toHaveBeenCalledWith('Tidak ada className input__icon--foo di cssModule')
 
       block.className('icon', {foo: 'bar'})
-      expect(spy).toHaveBeenCalledWith('Tidak ada className input__icon_foo_bar di cssModule')
+      expect(spy).toHaveBeenCalledWith('Tidak ada className input__icon--foo_bar di cssModule')
     })
 
     it('should throw error with unexisted states', () => {
@@ -202,7 +202,7 @@ describe('bem-css-modules', () => {
     it('should running normal', () => {
       const classNames = bem.block.bind(bem)
       const _block = classNames()
-      expect(_block.className()).toBe('HASH_INPUT')
+      expect(_block.className()).toBe('HASH-INPUT')
     })
   })
 })

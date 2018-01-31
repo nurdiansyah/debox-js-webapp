@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.com/deboxjs-webapp"
+    "url": "https://github.com/debox-js-webapp"
   },
   "keywords": [
     "webapp",
@@ -36,7 +36,7 @@
     "check": "npm run flow && npm run eslint -- --fix",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production npm run babel && npm run build:flow",
-    "build:flow": "flow-copy-source src libs && cpx \"src/**/*.flow\" libs",
+    "build:flow": "flow-copy-source --ignore '**/__tests__' src libs && cpx \"src/**/*.flow\" libs",
     "predeploy": "npm run check && npm run build",
     "cpPkgJson": "cpx package.json libs",
     "deploy": "npm run cpPkgJson && cd libs && yarn publish --access public",
