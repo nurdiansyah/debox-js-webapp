@@ -19,10 +19,13 @@
   },
   "dependencies": {
     "@deboxsoft/core": "^1.0.0-rc.0",
+    "classnames": "^2.2.5",
     "dom-helpers": "^2.4.0",
     "eventsource-polyfill": "^0.9.6",
     "fastclick": "^1.0.6",
-    "react-dom": "16.0.*"
+    "moment": "^2.20.1",
+    "react-dom": "16.0.*",
+    "recompose": "^0.26.0"
   },
   "devDependencies": {
     "@deboxsoft/devel-webapp": "^1.0.0-rc.0",
