@@ -1,6 +1,6 @@
 {
   "name": "@deboxsoft/webapp",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "debox framework webapp core.",
   "license": "UNLICENSED",
   "repository": {
