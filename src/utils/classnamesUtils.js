@@ -1,9 +1,14 @@
 // @flow
 
 import {mapProps, compose, pure} from 'recompose'
+import classNames from 'classnames'
+import bindClassNames from 'classnames/bind'
 import Bem from '../css/bem'
 
-const noopClassNames = (className?: string): string => className || ''
+const noBlockClassNames = (block: string, _classNames: Function): Function => (
+  element?: string,
+  modifier?: Object
+): string => (element ? _classNames(element, modifier) : _classNames(block, modifier))
 
 export type BlockType = {
   className: Function
@@ -18,10 +23,14 @@ export type BemType = Bem
 
 export const injectClassNames = (id?: string, options?: {keepStyles: boolean}) =>
   compose(
-    mapProps(({block, classNames, styles, ...attributes}) => {
+    mapProps(({block, classNames: _classNames, styles, ...attributes}) => {
       const addProps = options && options.keepStyles ? {styles} : {}
       return {
-        classNames: (block && block.className) || (id && styles && styles.block(id).className) || classNames,
+        classNames:
+          _classNames ||
+          (block && block.className) ||
+          (id && styles && styles.block(id).className) ||
+          classNames,
         ...addProps,
         ...attributes
       }
@@ -51,8 +60,21 @@ export const injectBlockFactory = (block: BlockType) =>
     pure
   )
 
-export const propsClassNames = (props: Object): Function =>
-  props.classNames || (props.block && props.block.className) || noopClassNames
+export const propsClassNames = (props: Object, block?: string): Function => {
+  if (!block) {
+    return (
+      props.classNames ||
+      (props.block && props.block.className) ||
+      (props.styles && bindClassNames.bind(props.styles))
+    )
+  } else if (props.styles) {
+    return (
+      (props.styles.block && props.styles.block(block).className) ||
+      noBlockClassNames(block, bindClassNames.bind(props.styles))
+    )
+  }
+  return noBlockClassNames(block, classNames)
+}
 
 export const classNamesFactory = (blockId: string, props: Object): Function => {
   let block
@@ -64,3 +86,5 @@ export const classNamesFactory = (blockId: string, props: Object): Function => {
   }
   return propsClassNames({block})
 }
+
+export {classNames}

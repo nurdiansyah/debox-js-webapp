@@ -40,6 +40,7 @@ describe('bem-css-modules', () => {
     expect(namesToArray(block.className({disabled: true}))).toEqual(
       namesToArray('HASH-INPUT HASH-INPUT--DISABLED')
     )
+
   })
 
   it('should return base element with mods and states', () => {
@@ -203,6 +204,25 @@ describe('bem-css-modules', () => {
       const classNames = bem.block.bind(bem)
       const _block = classNames()
       expect(_block.className()).toBe('HASH-INPUT')
+    })
+  })
+
+  describe('running with className', () => {
+    it('should work with block and className', () => {
+      expect(block.className(null, 'button')).toBe('HASH-INPUT button')
+      expect(block.className(undefined, 'button')).toBe('HASH-INPUT button')
+      expect(block.className('', 'button')).toBe('HASH-INPUT button')
+      expect(block.className(undefined, {disabled: true}, 'button')).toBe('HASH-INPUT HASH-INPUT--DISABLED button')
+    })
+
+    it('should work element with className', () => {
+      expect(block.className('icon', 'button')).toBe('HASH-INPUT__ICON button')
+      expect(block.className('field', {disabled: true}, 'button')).toBe('HASH-INPUT__FIELD HASH-INPUT__FIELD--DISABLED button')
+    })
+
+    it('should work state with className', () => {
+      expect(block.className('field', {disabled: true}, {active: true}, 'button')).toBe('HASH-INPUT__FIELD HASH-INPUT__FIELD--DISABLED HASH_IS-ACTIVE button')
+      expect(block.className({disabled: true}, {active: true}, 'button')).toBe('HASH-INPUT HASH-INPUT--DISABLED HASH_IS-ACTIVE button')
     })
   })
 })

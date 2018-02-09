@@ -45,15 +45,34 @@ class Bem {
   block(name?: string = this.extractModuleName()) {
     return {
       name,
-      className: (elementParam?: ?ElementType, modsParam?: ?Object, statesParam?: StatesType): string => {
-        let mods: ?ModsType, states: ?StatesType, element: ?string
+      className: (
+        elementParam?: ?ElementType,
+        modsParam?: ?Object | string,
+        statesParam?: StatesType | string,
+        classNameParam?: string
+      ): string => {
+        let mods: ?ModsType, states: ?StatesType, element: ?string, className: ?string
         if (elementParam && typeof elementParam === 'object') {
           mods = elementParam
-          states = modsParam
+          if (typeof modsParam === 'string') {
+            className = modsParam
+          } else {
+            states = modsParam
+            className = typeof statesParam === 'string' ? statesParam : classNameParam
+          }
         } else {
-          mods = modsParam
-          states = statesParam
           element = elementParam
+          if (typeof modsParam === 'object') {
+            mods = modsParam
+            if (typeof statesParam === 'string') {
+              className = statesParam
+            } else {
+              states = statesParam
+              className = classNameParam
+            }
+          } else {
+            className = modsParam
+          }
         }
         const baseBlock = element ? `${name}__${element}` : name
         let result = this.cssModule[baseBlock]
@@ -136,7 +155,7 @@ class Bem {
             return `${acc} ${state}`
           }, result)
         }
-        return result
+        return className ? `${result} ${className}` : result
       }
     }
   }
